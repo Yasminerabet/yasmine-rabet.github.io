@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Yasmine Rabet | Marketing Digital</title>
+<meta name="description" content="Portfolio de Yasmine Rabet — Cheffe de Projet Marketing Digital, Brand Content, Design Graphique, Vidéo, Composition Musicale. Paris.">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; user-select:none; }
+  body {
+    font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+    width:100%; height:100vh; overflow:hidden;
+    background:linear-gradient(135deg,#1a0533 0%,#3d1054 20%,#c2185b 50%,#f57c00 75%,#ffb74d 100%);
+  }
+
+  /* BOOT */
+  #boot { position:fixed;inset:0;z-index:9999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .8s; }
+  .apple-logo { font-size:72px;color:#fff;margin-bottom:40px; }
+  .progress-bar { width:200px;height:4px;background:#333;border-radius:2px;overflow:hidden; }
+  .progress-fill { height:100%;width:0%;background:#fff;border-radius:2px;transition:width .1s linear; }
+  .boot-name { color:rgba(255,255,255,.4);font-size:13px;margin-top:20px;letter-spacing:.5px; }
+
+  /* MENUBAR */
+  #menubar { position:fixed;top:0;left:0;right:0;height:28px;background:rgba(0,0,0,.38);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:100;color:#fff;font-size:13px; }
+  #menubar .left { display:flex;align-items:center;gap:20px; }
+  #menubar .right { display:flex;align-items:center;gap:14px;font-size:12px;opacity:.85; }
+
+  /* DESKTOP */
+  #desktop { position:fixed;inset:28px 0 80px 0;display:grid;grid-template-columns:repeat(auto-fill,100px);grid-auto-rows:110px;gap:8px;padding:16px;align-content:start; }
+
+  .folder { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;padding:8px;border-radius:12px;transition:background .15s,transform .15s; }
+  .folder:hover { background:rgba(255,255,255,.15);transform:scale(1.05); }
+  .folder:active { transform:scale(0.94); }
+  .folder-icon { width:58px;height:50px; }
+  .folder-icon svg { width:100%;height:100%; }
+  .folder-label { color:#fff;font-size:10.5px;text-align:center;font-weight:400;text-shadow:0 1px 3px rgba(0,0,0,.8);line-height:1.3;max-width:90px; }
+
+  /* WINDOWS */
+  .window { position:fixed;background:rgba(26,26,26,.95);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-radius:14px;border:.5px solid rgba(255,255,255,.12);box-shadow:0 32px 80px rgba(0,0,0,.65);z-index:200;overflow:hidden;display:none;animation:wOpen .22s cubic-bezier(.25,.46,.45,.94); }
+  .window.open { display:block; }
+  @keyframes wOpen { from{transform:scale(.84);opacity:0} to{transform:scale(1);opacity:1} }
+  .wtb { height:40px;background:rgba(42,42,42,.9);display:flex;align-items:center;padding:0 14px;gap:8px;cursor:move;border-bottom:.5px solid rgba(255,255,255,.07);flex-shrink:0; }
+  .wb { width:13px;height:13px;border-radius:50%;cursor:pointer;border:none;transition:filter .1s;flex-shrink:0; }
+  .wb:hover { filter:brightness(.7); }
+  .wbc { background:#ff5f57; } .wbm { background:#ffbd2e; } .wbx { background:#28c840; }
+  .wt { color:rgba(255,255,255,.75);font-size:13px;font-weight:500;flex:1;text-align:center; }
+  .wc { padding:20px 22px;color:#ddd;overflow-y:auto; }
+
+  h2.wh { font-size:18px;font-weight:600;color:#fff;margin-bottom:3px; }
+  .wsub { font-size:12px;color:rgba(255,255,255,.4);margin-bottom:16px;letter-spacing:.3px; }
+  .wp { font-size:13px;line-height:1.7;color:rgba(255,255,255,.7);margin-bottom:10px; }
+
+  .tag { display:inline-block;padding:3px 9px;border-radius:20px;font-size:10.5px;font-weight:500;margin:2px; }
+  .to { background:rgba(245,124,0,.2);color:#ffb74d;border:.5px solid rgba(245,124,0,.35); }
+  .tp { background:rgba(194,24,91,.2);color:#f48fb1;border:.5px solid rgba(194,24,91,.35); }
+  .tpu { background:rgba(123,31,162,.2);color:#ce93d8;border:.5px solid rgba(123,31,162,.35); }
+  .tb { background:rgba(21,101,192,.2);color:#90caf9;border:.5px solid rgba(21,101,192,.35); }
+  .tg { background:rgba(27,94,32,.2);color:#a5d6a7;border:.5px solid rgba(27,94,32,.35); }
+  .tgr { background:rgba(255,255,255,.07);color:rgba(255,255,255,.55);border:.5px solid rgba(255,255,255,.15); }
+
+  .proj { background:rgba(255,255,255,.05);border-radius:10px;padding:13px 15px;margin-bottom:10px;border-left:3px solid #f57c00; }
+  .proj-title { font-size:13px;font-weight:600;color:#fff;margin-bottom:2px; }
+  .proj-sub { font-size:11px;color:#ffb74d;margin-bottom:6px; }
+  .proj-desc { font-size:12px;color:rgba(255,255,255,.6);line-height:1.6; }
+
+  .grid2 { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0; }
+  .mini-card { background:rgba(255,255,255,.06);border-radius:8px;padding:12px;border:.5px solid rgba(255,255,255,.08); }
+  .mini-num { font-size:20px;font-weight:700;color:#ffb74d; }
+  .mini-label { font-size:10px;color:rgba(255,255,255,.4);margin-top:2px; }
+
+  .sep { height:.5px;background:rgba(255,255,255,.08);margin:14px 0; }
+
+  .skill-bar { margin-bottom:9px; }
+  .sn { font-size:11.5px;color:rgba(255,255,255,.55);margin-bottom:4px;display:flex;justify-content:space-between; }
+  .st { height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden; }
+  .sf { height:100%;border-radius:2px;background:linear-gradient(90deg,#c2185b,#f57c00); }
+
+  .about-top { display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:16px;border-bottom:.5px solid rgba(255,255,255,.08); }
+  .av { width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#c2185b,#f57c00);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:#fff;flex-shrink:0; }
+
+  .brand-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px; }
+  .brand-card { background:rgba(255,255,255,.05);border-radius:10px;padding:14px;border:.5px solid rgba(255,255,255,.09); }
+  .brand-name { font-size:14px;font-weight:700;color:#fff;margin-bottom:4px; }
+  .brand-desc { font-size:11px;color:rgba(255,255,255,.5);line-height:1.5; }
+  .brand-dot { display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px; }
+
+  .design-items { display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px; }
+  .design-item { background:rgba(255,255,255,.06);border-radius:8px;padding:10px 12px;border:.5px solid rgba(255,255,255,.08); }
+  .design-item-title { font-size:12px;font-weight:600;color:#fff;margin-bottom:2px; }
+  .design-item-sub { font-size:10px;color:rgba(255,255,255,.4); }
+
+  /* NOTIFICATION */
+  #notification { position:fixed;top:40px;right:16px;z-index:300;background:rgba(36,36,36,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:14px;border:.5px solid rgba(255,255,255,.13);width:328px;padding:14px 16px;box-shadow:0 16px 48px rgba(0,0,0,.55);animation:slideIn .4s cubic-bezier(.25,.46,.45,.94) 2.5s both;display:flex;gap:12px;align-items:flex-start; }
+  @keyframes slideIn { from{transform:translateX(380px);opacity:0} to{transform:translateX(0);opacity:1} }
+  .ni { width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#c2185b,#f57c00);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0; }
+  .nap { font-size:10px;color:rgba(255,255,255,.4);margin-bottom:2px;text-transform:uppercase;letter-spacing:.6px; }
+  .nti { font-size:13px;font-weight:600;color:#fff;margin-bottom:3px; }
+  .nte { font-size:12px;color:rgba(255,255,255,.55);line-height:1.45; }
+  .nlink { color:#ffb74d;text-decoration:none; }
+  .ncl { background:none;border:none;color:rgba(255,255,255,.3);cursor:pointer;font-size:15px;padding:0; }
+  .ncl:hover { color:rgba(255,255,255,.6); }
+
+  /* DOCK */
+  #dock { position:fixed;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.18);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:20px;border:.5px solid rgba(255,255,255,.25);padding:8px 12px;display:flex;gap:5px;align-items:flex-end;z-index:100; }
+  .di { width:48px;height:48px;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:24px;transition:transform .15s;position:relative; }
+  .di:hover { transform:scale(1.3) translateY(-8px); }
+  .di:active { transform:scale(1.1); }
+  .dsep { width:.5px;height:36px;background:rgba(255,255,255,.28);margin:0 3px; }
+  .dtip { position:absolute;bottom:56px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);color:#fff;font-size:10.5px;padding:3px 7px;border-radius:5px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s; }
+  .di:hover .dtip { opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- BOOT -->
+<div id="boot">
+  <div class="apple-logo">&#63743;</div>
+  <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
+  <div class="boot-name">YasmineOS · 2026</div>
+</div>
+
+<!-- MENUBAR -->
+<div id="menubar">
+  <div class="left">
+    <span style="font-size:16px">&#63743;</span>
+    <span style="font-weight:600">Bureau de Yasmine Rabet</span>
+    <span style="opacity:.7">Fichier</span>
+    <span style="opacity:.7">Affichage</span>
+    <span style="opacity:.7">Aide</span>
+  </div>
+  <div class="right">
+    <span>🔋 100%</span>
+    <span>📶</span>
+    <span id="clock">--:--</span>
+  </div>
+</div>
+
+<!-- DESKTOP ICONS -->
+<div id="desktop">
+  <div class="folder" ondblclick="ow('branding')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#ad1457"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#e91e8c"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">🎨</text></svg></div>
+    <span class="folder-label">Brand Content</span>
+  </div>
+  <div class="folder" ondblclick="ow('design')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#7b1fa2"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#9c27b0"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">✏️</text></svg></div>
+    <span class="folder-label">Design Graphique</span>
+  </div>
+  <div class="folder" ondblclick="ow('video')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#4a148c"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#7e57c2"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">🎬</text></svg></div>
+    <span class="folder-label">Vidéo & Podcast</span>
+  </div>
+  <div class="folder" ondblclick="ow('newsletter')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#01579b"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#0288d1"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">✉️</text></svg></div>
+    <span class="folder-label">Newsletter</span>
+  </div>
+  <div class="folder" ondblclick="ow('music')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#bf360c"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#f4511e"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">🎵</text></svg></div>
+    <span class="folder-label">Composition Musicale</span>
+  </div>
+  <div class="folder" ondblclick="ow('strategie')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#1b5e20"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#388e3c"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">📊</text></svg></div>
+    <span class="folder-label">Stratégie Digitale</span>
+  </div>
+  <div class="folder" ondblclick="ow('about')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#37474f"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#546e7a"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">👤</text></svg></div>
+    <span class="folder-label">À propos.exe</span>
+  </div>
+  <div class="folder" ondblclick="ow('cv')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><rect x="10" y="3" width="38" height="46" rx="4" fill="#c62828"/><rect x="15" y="11" width="26" height="2" rx="1" fill="rgba(255,255,255,.65)"/><rect x="15" y="17" width="20" height="2" rx="1" fill="rgba(255,255,255,.5)"/><rect x="15" y="23" width="23" height="2" rx="1" fill="rgba(255,255,255,.5)"/><rect x="15" y="29" width="17" height="2" rx="1" fill="rgba(255,255,255,.4)"/><text x="29" y="43" text-anchor="middle" fill="white" font-size="7" font-weight="700">PDF</text></svg></div>
+    <span class="folder-label">CV.pdf</span>
+  </div>
+  <div class="folder" ondblclick="ow('contact')">
+    <div class="folder-icon"><svg viewBox="0 0 60 52"><path d="M0 10 Q0 6 4 6 L22 6 L26 2 L56 2 Q60 2 60 6 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#004d40"/><path d="M0 14 L60 14 L60 46 Q60 50 56 50 L4 50 Q0 50 0 46Z" fill="#00695c"/><text x="30" y="37" text-anchor="middle" fill="white" font-size="19">📬</text></svg></div>
+    <span class="folder-label">Me contacter</span>
+  </div>
+</div>
+
+<!-- NOTIFICATION -->
+<div id="notification">
+  <div class="ni">💼</div>
+  <div style="flex:1">
+    <div class="nap">Portfolio · Maintenant</div>
+    <div class="nti">Ouverte à toute offre CDI 🚀</div>
+    <div class="nte">Marketing Digital · Paris<br><a class="nlink" href="https://www.linkedin.com/in/yasmine-rabet/" target="_blank">Voir profil LinkedIn →</a></div>
+  </div>
+  <button class="ncl" onclick="document.getElementById('notification').style.display='none'">✕</button>
+</div>
+
+<!-- DOCK -->
+<div id="dock">
+  <div class="di" style="background:linear-gradient(135deg,#37474f,#546e7a)" ondblclick="ow('about')"><span>👤</span><div class="dtip">À propos</div></div>
+  <div class="di" style="background:linear-gradient(135deg,#ad1457,#e91e8c)" ondblclick="ow('branding')"><span>🎨</span><div class="dtip">Branding</div></div>
+  <div class="di" style="background:linear-gradient(135deg,#7b1fa2,#9c27b0)" ondblclick="ow('design')"><span>✏️</span><div class="dtip">Design</div></div>
+  <div class="di" style="background:linear-gradient(135deg,#4a148c,#7e57c2)" ondblclick="ow('video')"><span>🎬</span><div class="dtip">Vidéo</div></div>
+  <div class="di" style="background:linear-gradient(135deg,#01579b,#0288d1)" ondblclick="ow('newsletter')"><span>✉️</span><div class="dtip">Newsletter</div></div>
+  <div class="di" style="background:linear-gradient(135deg,#bf360c,#f4511e)" ondblclick="ow('music')"><span>🎵</span><div class="dtip">Musique</div></div>
+  <div class="di" style="background:linear-gradient(135deg,#1b5e20,#388e3c)" ondblclick="ow('strategie')"><span>📊</span><div class="dtip">Stratégie</div></div>
+  <div class="dsep"></div>
+  <div class="di" style="background:rgba(255,255,255,.15)" ondblclick="ow('contact')"><span>📬</span><div class="dtip">Contact</div></div>
+  <div class="di" style="background:rgba(255,255,255,.15)" ondblclick="ow('cv')"><span>📄</span><div class="dtip">CV</div></div>
+</div>
+
+<!-- WINDOW : BRAND CONTENT -->
+<div class="window" id="win-branding" style="top:60px;left:60px;width:620px;">
+  <div class="wtb" onmousedown="sd(event,'win-branding')">
+    <button class="wb wbc" onclick="cw('win-branding')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">🎨 Brand Content — Projets clients</span>
+  </div>
+  <div class="wc" style="max-height:520px">
+    <h2 class="wh">Brand Content & Identité de Marque</h2>
+    <div class="wsub">Stratégie éditoriale · Direction artistique · Contenus social media · Storytelling de marque</div>
+    <div class="brand-grid">
+      <div class="brand-card" style="border-left:3px solid #e91e8c">
+        <div class="brand-name">Nohée <span style="font-size:10px;color:rgba(255,255,255,.4)">· Groupe ALTAREA</span></div>
+        <div style="margin-bottom:6px"><span class="brand-dot" style="background:#1565c0"></span><span class="brand-dot" style="background:#f8f0e3"></span><span class="brand-dot" style="background:#e8957a"></span><span class="brand-dot" style="background:#8b1a5e"></span></div>
+        <div class="brand-desc">Résidences seniors. Contenus social media, visuels Google Ads, fiches établissements et storytelling de marque chaleureux.</div>
+      </div>
+      <div class="brand-card" style="border-left:3px solid #ff4081">
+        <div class="brand-name">Yeaulo</div>
+        <div style="margin-bottom:6px"><span class="brand-dot" style="background:#ffb3c1"></span><span class="brand-dot" style="background:#7de8e0"></span><span class="brand-dot" style="background:#ff1493"></span><span class="brand-dot" style="background:#d4a0e0"></span></div>
+        <div class="brand-desc">Boisson naturelle énergisante. Identité visuelle complète, packaging canettes — "La boisson qui te ressemble."</div>
+      </div>
+      <div class="brand-card" style="border-left:3px solid #4caf50">
+        <div class="brand-name">TORY</div>
+        <div style="margin-bottom:6px"><span class="brand-dot" style="background:#2e7d32"></span><span class="brand-dot" style="background:#f9a825"></span><span class="brand-dot" style="background:#c62828"></span><span class="brand-dot" style="background:#fff"></span></div>
+        <div class="brand-desc">Chocolat noir 70% Made in Algeria. Branding épuré, narration sensorielle et fierté du made in Algeria.</div>
+      </div>
+      <div class="brand-card" style="border-left:3px solid #e53935">
+        <div class="brand-name">ExOp <span style="font-size:10px;color:rgba(255,255,255,.4)">· Cybersécurité</span></div>
+        <div style="margin-bottom:6px"><span class="brand-dot" style="background:#e53935"></span><span class="brand-dot" style="background:#fff"></span><span class="brand-dot" style="background:#616161"></span></div>
+        <div class="brand-desc">Startup cybersécurité. Identité complète (papeterie, site web, mobile), messages accessibles et humains.</div>
+      </div>
+      <div class="brand-card" style="border-left:3px solid #7e57c2">
+        <div class="brand-name">Blind <span style="font-size:10px;color:rgba(255,255,255,.4)">· Expérientiel</span></div>
+        <div style="margin-bottom:6px"><span class="brand-dot" style="background:#e53935"></span><span class="brand-dot" style="background:#fff"></span><span class="brand-dot" style="background:#616161"></span><span class="brand-dot" style="background:#9c27b0"></span></div>
+        <div class="brand-desc">Week-ends surprises. Posts Instagram mystérieux pour des expériences inattendues (Zen, Coloré, Théâtral…)</div>
+      </div>
+      <div class="brand-card" style="border-left:3px solid #f57c00">
+        <div class="brand-name">France Cyberdéfense</div>
+        <div style="margin-bottom:6px"><span class="brand-dot" style="background:#002395"></span><span class="brand-dot" style="background:#fff"></span><span class="brand-dot" style="background:#ED2939"></span></div>
+        <div class="brand-desc">Contribution au rebranding complet. Supports visuels, graphiques et contenus pour la stratégie digitale.</div>
+      </div>
+    </div>
+    <div><span class="tag to">Illustrator</span><span class="tag tp">Photoshop</span><span class="tag tpu">InDesign</span><span class="tag tb">Figma</span><span class="tag tg">Canva</span><span class="tag tgr">Direction artistique</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : DESIGN GRAPHIQUE -->
+<div class="window" id="win-design" style="top:75px;left:80px;width:600px;">
+  <div class="wtb" onmousedown="sd(event,'win-design')">
+    <button class="wb wbc" onclick="cw('win-design')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">✏️ Design Graphique — Portfolio 2018-2026</span>
+  </div>
+  <div class="wc" style="max-height:500px">
+    <h2 class="wh">Design Graphique</h2>
+    <div class="wsub">Logos · Packaging · Bannières · Affiches · Conception album · Retouche photo · 2018 → 2026</div>
+    <div class="design-items">
+      <div class="design-item"><div class="design-item-title">🔤 Logos</div><div class="design-item-sub">Bic&amp;Me, Mosaïque, GreenPots, Bioty, Delya Music…</div></div>
+      <div class="design-item"><div class="design-item-title">📦 Packaging</div><div class="design-item-sub">Agrodiv — Germe de Blé, Cerfibre, Son de Blé</div></div>
+      <div class="design-item"><div class="design-item-title">🖼️ Bannières</div><div class="design-item-sub">Roll-ups Agrodiv "First Agro-food Group in Algeria"</div></div>
+      <div class="design-item"><div class="design-item-title">📌 Affiches</div><div class="design-item-sub">Orchestre Féminin Dikrayat Cheikh Sadek El Bejaoui</div></div>
+      <div class="design-item"><div class="design-item-title">💿 Album CD</div><div class="design-item-sub">Livret, pochette et disque — Orchestre féminin</div></div>
+      <div class="design-item"><div class="design-item-title">📷 Retouche photo</div><div class="design-item-sub">Restauration photo ancienne 1938 — Photoshop</div></div>
+    </div>
+    <div class="sep"></div>
+    <p class="wp">Maîtrise complète de la chaîne graphique : du brief créatif à la production finale, pour des supports print et digitaux variés, avec respect des contraintes de marque et des formats techniques.</p>
+    <div><span class="tag tp">Photoshop</span><span class="tag tp">Illustrator</span><span class="tag tpu">InDesign</span><span class="tag tb">Figma</span><span class="tag tgr">BTS PAO</span><span class="tag to">2018 – 2026</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : VIDÉO -->
+<div class="window" id="win-video" style="top:85px;left:100px;width:580px;">
+  <div class="wtb" onmousedown="sd(event,'win-video')">
+    <button class="wb wbc" onclick="cw('win-video')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">🎬 Vidéo, Réalisation & Podcast</span>
+  </div>
+  <div class="wc" style="max-height:490px">
+    <h2 class="wh">Montage Vidéo & Réalisation</h2>
+    <div class="wsub">Clips · Capsules produits · Réalisation Paris · Podcast · Photo</div>
+    <div class="proj"><div class="proj-title">Réalisation vidéo — Plans urbains Paris</div><div class="proj-sub">Portfolio personnel · 2024-2026</div><div class="proj-desc">Tournages en extérieur dans Paris (Eiffel, rues haussmanniennes). Cadrage cinématographique, plans d'ambiance, montage solo avec travail sur la lumière naturelle.</div></div>
+    <div class="proj" style="border-left-color:#7e57c2"><div class="proj-title">Production & montage Podcast</div><div class="proj-sub">AFUS — Association franco-méditerranéenne · 2025</div><div class="proj-desc">Production complète : enregistrement, montage, mixage audio, déploiement de la stratégie de lancement et suivi des performances.</div></div>
+    <div class="proj" style="border-left-color:#e91e8c"><div class="proj-title">Capsules vidéo produits</div><div class="proj-sub">MinimaFilms · 2013</div><div class="proj-desc">Réalisation et montage de capsules vidéo produits. Photographie, traitement d'images (Suite Adobe), création de supports graphiques.</div></div>
+    <div class="proj" style="border-left-color:#f4511e"><div class="proj-title">Clip & montage audio radio</div><div class="proj-sub">Festival Association de musique · 2016</div><div class="proj-desc">Réalisation photo et vidéo (clip musical), montage audio adapté à la diffusion radio. Coordination artistique du festival.</div></div>
+    <div style="margin-top:10px"><span class="tag tpu">Premiere Pro</span><span class="tag tpu">After Effects</span><span class="tag tb">Podcast</span><span class="tag to">Mixage</span><span class="tag tp">Photo</span><span class="tag tgr">CapCut</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : NEWSLETTER -->
+<div class="window" id="win-newsletter" style="top:80px;left:90px;width:555px;">
+  <div class="wtb" onmousedown="sd(event,'win-newsletter')">
+    <button class="wb wbc" onclick="cw('win-newsletter')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">✉️ Newsletter & Email Marketing</span>
+  </div>
+  <div class="wc" style="max-height:470px">
+    <h2 class="wh">Newsletter & Emailing</h2>
+    <div class="wsub">Conception · Automatisation B2B · CRM · Segmentation · Reporting</div>
+    <div class="proj"><div class="proj-title">Conception d'emailing via CRM</div><div class="proj-sub">Nohée (Groupe ALTAREA) · 2024 - 2026</div><div class="proj-desc">Conception et envoi de campagnes emailing ciblées. Création des visuels et du copywriting, mise en place de reportings de performance (taux d'ouverture, CTR, conversion).</div></div>
+    <div class="proj" style="border-left-color:#0288d1"><div class="proj-title">Automatisation campagnes B2B</div><div class="proj-sub">France Cyberdéfense · 2023 - 2024</div><div class="proj-desc">Déploiement de séquences d'emailing B2B via SmartLead. Automatisation de la prospection, paramétrage des workflows, optimisation des taux de réponse.</div></div>
+    <div class="sep"></div>
+    <p class="wp">Maîtrise de toute la chaîne email : brief → design → copy → segmentation → automatisation → analyse. Double compétence technique et créative.</p>
+    <div><span class="tag tb">SmartLead</span><span class="tag tb">CRM</span><span class="tag tpu">Make / n8n</span><span class="tag tg">Brevo</span><span class="tag to">Copywriting</span><span class="tag tgr">B2B</span><span class="tag tgr">Automation</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : MUSIQUE -->
+<div class="window" id="win-music" style="top:70px;left:85px;width:540px;">
+  <div class="wtb" onmousedown="sd(event,'win-music')">
+    <button class="wb wbc" onclick="cw('win-music')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">🎵 Composition Musicale & Jingles</span>
+  </div>
+  <div class="wc" style="max-height:460px">
+    <h2 class="wh">Composition Musicale</h2>
+    <div class="wsub">Jingles publicitaires · Musique de film · Mixage · Parcours artistique</div>
+    <div class="proj"><div class="proj-title">Composition pour jingles publicitaires & films</div><div class="proj-sub">MinimaFilms · 2013</div><div class="proj-desc">Composition de musiques originales pour spots publicitaires et capsules vidéo. Bandes son adaptées au ton de chaque marque.</div></div>
+    <div class="proj" style="border-left-color:#f4511e"><div class="proj-title">Montage audio pour diffusion radio</div><div class="proj-sub">Festival Association de musique · 2016</div><div class="proj-desc">Mixage et mastering audio, préparation des formats adaptés à la diffusion radio dans le cadre d'un festival d'une semaine.</div></div>
+    <div class="sep"></div>
+    <div style="background:rgba(245,124,0,.08);border-radius:10px;padding:14px;border:.5px solid rgba(245,124,0,.2)">
+      <div style="font-size:12px;font-weight:600;color:#ffb74d;margin-bottom:6px">🎤 Parcours artistique personnel</div>
+      <p class="wp" style="margin:0">Chanteuse, compositrice et musicienne depuis plus de 10 ans. Un parcours artistique mené en parallèle qui nourrit une sensibilité unique pour le storytelling sonore et la narration de marque.</p>
+    </div>
+    <div style="margin-top:12px"><span class="tag to">Composition</span><span class="tag to">Jingles pub</span><span class="tag tpu">Logic Pro</span><span class="tag tb">Mixage</span><span class="tag tg">Podcast</span><span class="tag tgr">Sound design</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : STRATÉGIE -->
+<div class="window" id="win-strategie" style="top:62px;left:72px;width:610px;">
+  <div class="wtb" onmousedown="sd(event,'win-strategie')">
+    <button class="wb wbc" onclick="cw('win-strategie')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">📊 Stratégie Marketing Digital</span>
+  </div>
+  <div class="wc" style="max-height:530px">
+    <h2 class="wh">Stratégie & Performance Digitale</h2>
+    <div class="wsub">SEO · Google Ads · Meta Ads · E-réputation · Analytics · Automatisation · WordPress</div>
+    <div class="grid2">
+      <div class="mini-card"><div class="mini-num">42</div><div class="mini-label">Fiches Google Business Profile gérées</div></div>
+      <div class="mini-card"><div class="mini-num">2 ans</div><div class="mini-label">Expérience SEO & e-réputation active</div></div>
+      <div class="mini-card"><div class="mini-num">3+</div><div class="mini-label">Entreprises accompagnées</div></div>
+      <div class="mini-card"><div class="mini-num">M2</div><div class="mini-label">Webmarketing & Social Media 2026</div></div>
+    </div>
+    <div class="proj" style="margin-top:4px"><div class="proj-title">Assistante Marketing Digital — Alternance</div><div class="proj-sub">Nohée (Groupe ALTAREA) · 2024 - 2026</div><div class="proj-desc">SEO national, 42 Google Business Profile, e-réputation (Google, Trustpilot), Google Ads & Meta Ads, reportings performance, emailing CRM.</div></div>
+    <div class="proj" style="border-left-color:#388e3c"><div class="proj-title">Assistante Marketing Digital — Alternance</div><div class="proj-sub">France Cyberdéfense · 2023 - 2024</div><div class="proj-desc">Stratégie digitale, rebranding, SEO WordPress, automatisation marketing (Make, n8n), emailing B2B (SmartLead), LinkedIn automation (MirrorProfil).</div></div>
+    <div style="margin-top:10px"><span class="tag tg">Google Analytics 4</span><span class="tag tg">Google Ads</span><span class="tag tb">Meta Ads</span><span class="tag to">SEO</span><span class="tag tpu">Make / n8n</span><span class="tag tgr">WordPress</span><span class="tag tp">MirrorProfil</span><span class="tag tgr">SmartLead</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : À PROPOS -->
+<div class="window" id="win-about" style="top:68px;left:88px;width:530px;">
+  <div class="wtb" onmousedown="sd(event,'win-about')">
+    <button class="wb wbc" onclick="cw('win-about')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">👤 Yasmine Rabet — À propos</span>
+  </div>
+  <div class="wc" style="max-height:500px">
+    <div class="about-top">
+      <div class="av">YR</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:3px">Yasmine Rabet</div>
+        <div style="font-size:13px;color:#ffb74d;font-weight:500;margin-bottom:4px">Cheffe de Projet Marketing Digital</div>
+        <div style="font-size:11.5px;color:rgba(255,255,255,.4)">📍 Paris · ✉️ yasmine.rabet@gmail.com</div>
+        <div style="font-size:11.5px;color:rgba(255,255,255,.4)">📞 07 53 24 29 30 · Ouverte à un CDI</div>
+      </div>
+    </div>
+    <p class="wp">Profil hybride marketing & création, capable de piloter une stratégie marketing digital tout en assurant la production de contenus à forte valeur (SEO, vidéo, design). Autonome, rapide et orientée résultats.</p>
+    <div class="sep"></div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px">Compétences</div>
+    <div class="skill-bar"><div class="sn"><span>Stratégie & Performance Digitale</span><span style="color:#ffb74d">95%</span></div><div class="st"><div class="sf" style="width:95%"></div></div></div>
+    <div class="skill-bar"><div class="sn"><span>Brand Content & Design</span><span style="color:#ffb74d">90%</span></div><div class="st"><div class="sf" style="width:90%"></div></div></div>
+    <div class="skill-bar"><div class="sn"><span>Vidéo & Production</span><span style="color:#ffb74d">85%</span></div><div class="st"><div class="sf" style="width:85%"></div></div></div>
+    <div class="skill-bar"><div class="sn"><span>Automatisation & Gestion de projet</span><span style="color:#ffb74d">88%</span></div><div class="st"><div class="sf" style="width:88%"></div></div></div>
+    <div class="skill-bar"><div class="sn"><span>Composition Musicale</span><span style="color:#ffb74d">80%</span></div><div class="st"><div class="sf" style="width:80%"></div></div></div>
+    <div class="sep"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag to">🇫🇷 Français — Courant</span><span class="tag tb">🇬🇧 Anglais — A2</span><span class="tag tg">🌙 Arabe — Natif</span></div>
+  </div>
+</div>
+
+<!-- WINDOW : CV -->
+<div class="window" id="win-cv" style="top:90px;left:110px;width:400px;">
+  <div class="wtb" onmousedown="sd(event,'win-cv')">
+    <button class="wb wbc" onclick="cw('win-cv')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">📄 CV — Yasmine Rabet.pdf</span>
+  </div>
+  <div class="wc" style="text-align:center;padding:36px 22px">
+    <div style="font-size:52px;margin-bottom:14px">📄</div>
+    <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:5px">Yasmine Rabet</div>
+    <div style="font-size:12px;color:#ffb74d;margin-bottom:4px">Cheffe de Projet Marketing Digital</div>
+    <div style="font-size:11px;color:rgba(255,255,255,.35);margin-bottom:22px">Master 2 Webmarketing & Social Media · Digital College 2026</div>
+    <a href="CV_YASMINE_RABET_2026.pdf" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#c2185b,#f57c00);color:#fff;padding:11px 28px;border-radius:22px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.3px">Télécharger mon CV →</a>
+  </div>
+</div>
+
+<!-- WINDOW : CONTACT -->
+<div class="window" id="win-contact" style="top:95px;left:115px;width:420px;">
+  <div class="wtb" onmousedown="sd(event,'win-contact')">
+    <button class="wb wbc" onclick="cw('win-contact')"></button><button class="wb wbm"></button><button class="wb wbx"></button>
+    <span class="wt">📬 Me contacter</span>
+  </div>
+  <div class="wc" style="padding:30px 24px;text-align:center">
+    <div style="font-size:42px;margin-bottom:16px">👋</div>
+    <div style="font-size:17px;font-weight:600;color:#fff;margin-bottom:6px">Échangeons !</div>
+    <div style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:24px">Ouverte à toute opportunité CDI en Marketing Digital</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <a href="mailto:yasmine.rabet@gmail.com" style="background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 16px;text-decoration:none;color:#fff;font-size:13px;display:flex;align-items:center;gap:10px;text-align:left">
+        <span style="font-size:20px">✉️</span><span>yasmine.rabet@gmail.com</span>
+      </a>
+      <a href="tel:+33753242930" style="background:rgba(255,255,255,.07);border:.5px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 16px;text-decoration:none;color:#fff;font-size:13px;display:flex;align-items:center;gap:10px;text-align:left">
+        <span style="font-size:20px">📞</span><span>07 53 24 29 30</span>
+      </a>
+      <a href="https://www.linkedin.com/in/yasmine-rabet/" target="_blank" style="background:rgba(0,119,181,.2);border:.5px solid rgba(0,119,181,.4);border-radius:10px;padding:12px 16px;text-decoration:none;color:#90caf9;font-size:13px;display:flex;align-items:center;gap:10px;text-align:left">
+        <span style="font-size:20px">💼</span><span>LinkedIn — Yasmine Rabet →</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // BOOT
+  const prog=document.getElementById('prog'),boot=document.getElementById('boot');
+  let p=0;
+  const t=setInterval(()=>{ p+=Math.random()*7+2; if(p>=100){p=100;clearInterval(t);setTimeout(()=>{boot.style.opacity='0';setTimeout(()=>boot.style.display='none',800);},500);} prog.style.width=p+'%'; },80);
+
+  // CLOCK
+  function tick(){const n=new Date();document.getElementById('clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0');}
+  tick();setInterval(tick,1000);
+
+  // WINDOWS
+  const wmap={branding:'win-branding',design:'win-design',video:'win-video',newsletter:'win-newsletter',music:'win-music',strategie:'win-strategie',about:'win-about',cv:'win-cv',contact:'win-contact'};
+  let z=200;
+  function ow(k){const el=document.getElementById(wmap[k]);if(!el)return;el.classList.add('open');el.style.zIndex=++z;el.style.animation='none';void el.offsetWidth;el.style.animation='wOpen .22s cubic-bezier(.25,.46,.45,.94)';}
+  function cw(id){document.getElementById(id).classList.remove('open');}
+
+  // DRAG
+  let drag=null,ox=0,oy=0;
+  function sd(e,id){drag=document.getElementById(id);drag.style.zIndex=++z;const r=drag.getBoundingClientRect();ox=e.clientX-r.left;oy=e.clientY-r.top;e.preventDefault();}
+  document.addEventListener('mousemove',e=>{if(drag){drag.style.left=(e.clientX-ox)+'px';drag.style.top=(e.clientY-oy)+'px';}});
+  document.addEventListener('mouseup',()=>drag=null);
+</script>
+</body>
+</html>
